@@ -1,10 +1,10 @@
-import Categories from "@/components/shared/categories";
-import Filters from "@/components/shared/filters";
-import ProductCard from "@/components/shared/product-card";
-import ProductsGroupList from "@/components/shared/products-group-list";
-import SortPopup from "@/components/shared/sort-popup";
-import { Title } from "@/components/shared/title";
-import TopBar from "@/components/shared/top-bar";
+import Categories from "@/shared/components/shared/categories";
+import Filters from "@/shared/components/shared/filters";
+import ProductCard from "@/shared/components/shared/product-card";
+import ProductsGroupList from "@/shared/components/shared/products-group-list";
+import SortPopup from "@/shared/components/shared/sort-popup";
+import { Title } from "@/shared/components/shared/title";
+import TopBar from "@/shared/components/shared/top-bar";
 import { prisma } from "@/prisma/prisma-client";
 
 export default async function Home() {
