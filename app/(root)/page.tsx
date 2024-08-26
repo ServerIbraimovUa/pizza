@@ -1,25 +1,17 @@
-import Categories from "@/shared/components/shared/categories";
 import Filters from "@/shared/components/shared/filters";
-import ProductCard from "@/shared/components/shared/product-card";
 import ProductsGroupList from "@/shared/components/shared/products-group-list";
-import SortPopup from "@/shared/components/shared/sort-popup";
 import { Title } from "@/shared/components/shared/title";
 import TopBar from "@/shared/components/shared/top-bar";
 import { prisma } from "@/prisma/prisma-client";
+import { Suspense } from "react";
+import { findPizzas, GetSearchParams } from "@/shared/lib/find-pizzas";
+import Stories from "@/shared/components/shared/stories";
 
-export default async function Home() {
-    const categories = await prisma.category.findMany({
-        include: {
-            products: {
-                include: {
-                    ingredients: true,
-                    items: true,
-                },
-            },
-        },
-    });
+export default async function Home({ searchParams }: { searchParams: GetSearchParams }) {
+    const categories = await findPizzas(searchParams);
     return (
         <>
+            <Stories />
             <div className="container mt-10">
                 <Title text="Все пиццы" size="lg" className="font-extrabold" />
             </div>
@@ -29,7 +21,9 @@ export default async function Home() {
                 <div className="flex gap-[80px]">
                     {/* filters */}
                     <div className="w-[250px]">
-                        <Filters />
+                        <Suspense>
+                            <Filters />
+                        </Suspense>
                     </div>
 
                     {/* product list */}

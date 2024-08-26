@@ -16,8 +16,9 @@ interface Props {
     imageUrl: string;
     name: string;
     ingredients: Ingredient[];
+    loading: boolean;
     items: ProductItem[];
-    onClickAddCart?: VoidFunction;
+    onClickAddCart: (itemId: number, ingredients: number[]) => void;
     className?: string;
 }
 
@@ -26,6 +27,7 @@ const ChoosePizzaForm: FC<Props> = ({
     name,
     ingredients,
     items,
+    loading,
     onClickAddCart,
     className,
 }) => {
@@ -34,6 +36,7 @@ const ChoosePizzaForm: FC<Props> = ({
         type,
         selectedIngredients,
         availablePizzaSizes,
+        currentItemId,
         addIngredient,
         setSize,
         setType,
@@ -48,13 +51,9 @@ const ChoosePizzaForm: FC<Props> = ({
     );
 
     const handleAddToCart = () => {
-        onClickAddCart?.();
-
-        console.log({
-            size,
-            type,
-            ingredients: selectedIngredients,
-        });
+        if (currentItemId) {
+            onClickAddCart(currentItemId, Array.from(selectedIngredients));
+        }
     };
     return (
         <div className={cn("flex flex-1", className)}>
@@ -89,7 +88,11 @@ const ChoosePizzaForm: FC<Props> = ({
                         ))}
                     </div>
                 </div>
-                <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
+                <Button
+                    loading={loading}
+                    onClick={handleAddToCart}
+                    className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+                >
                     Добавить в корзину за {totalPrice} &#8372;
                 </Button>
             </div>

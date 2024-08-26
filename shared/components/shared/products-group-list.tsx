@@ -7,10 +7,11 @@ import ProductCard from "./product-card";
 import { cn } from "@/shared/lib/utils";
 import { Title } from "./title";
 import { useCategoryStore } from "@/shared/store/category";
+import { IProduct } from "@/@types/prisma";
 
 interface Props {
     title: string;
-    items: any[];
+    items: IProduct[];
     categoryId: number;
     className?: string;
     listClassName?: string;
@@ -34,7 +35,6 @@ const ProductsGroupList: React.FC<Props> = ({
             setActiveCategoryId(categoryId);
         }
     }, [categoryId, intersection?.isIntersecting, setActiveCategoryId, title]);
-
     return (
         <div className={className} id={title} ref={intersectionRef}>
             <Title text={title} size="lg" className="font-extrabold mb-5" />
@@ -47,6 +47,7 @@ const ProductsGroupList: React.FC<Props> = ({
                         name={product.name}
                         imageUrl={product.imageUrl}
                         price={product.items[0].price}
+                        ingredients={product.ingredients}
                     />
                 ))}
             </ul>

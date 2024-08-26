@@ -1,12 +1,15 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/shared/components/ui/dialog";
 import React from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
 import { useRouter } from "next/navigation";
 import ChooseProductForm from "../choose-product-form";
 import { IProduct } from "@/@types/prisma";
 import ChoosePizzaForm from "../choose-pizza-form";
+import { useCartStore } from "@/shared/store/cart";
+import toast from "react-hot-toast";
+import ProductForm from "../product-form";
 interface Props {
     product: IProduct;
     className?: string;
@@ -15,25 +18,16 @@ interface Props {
 const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
     const router = useRouter();
 
-    const isPizzaForm = Boolean(product.items[0].pizzaType);
     return (
         <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
             <DialogContent
+                aria-describedby={undefined}
                 className={cn(
                     "p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden",
                     className
                 )}
             >
-                {isPizzaForm ? (
-                    <ChoosePizzaForm
-                        imageUrl={product.imageUrl}
-                        name={product.name}
-                        ingredients={product.ingredients}
-                        items={product.items}
-                    />
-                ) : (
-                    <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
-                )}
+                <ProductForm product={product} onSubmitModal={() => router.back()} />
             </DialogContent>
         </Dialog>
     );

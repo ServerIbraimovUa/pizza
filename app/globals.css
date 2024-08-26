@@ -77,7 +77,7 @@ html {
         @apply border-border;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground scrollbar;
     }
 }
 
@@ -96,4 +96,14 @@ html {
 
 #nprogress .spinner-icon {
     @apply border-t-primary border-l-primary !important;
+}
+.visually-hidden {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
