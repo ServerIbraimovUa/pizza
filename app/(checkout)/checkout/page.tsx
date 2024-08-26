@@ -46,7 +46,7 @@ export default function CheckoutPage() {
         if (session) {
             fetchUserInfo();
         }
-    }, [session]);
+    }, [form, session]);
 
     const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
         try {
